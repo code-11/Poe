@@ -1,12 +1,13 @@
 #include <Servo.h>
 
-Servo myservo;
+Servo panServo;
+Servo tiltServo;
 
 int analogPin = A0;     // potentiometer wiper (middle terminal) connected to analog pin 3
 int val = 0;           // variable to store the value read
 float dist = 0;        // variable to store the calculated distance
-float pos = 0;           // variable to store the servo position
-//float tiltPos = 0;
+float panPos = 0;           // variable to store the servo position
+float tiltPos = 0;
 
 float getDist(int IRval) {
   return 4590*(1.0)/((float) IRval);
@@ -29,8 +30,8 @@ void setup()
 {
 
   Serial.begin(9600);          //  setup serial
-  myservo.attach(9);
-  //tiltServo.attach(10);
+  panServo.attach(9);
+  tiltServo.attach(10);
 }
 
 
@@ -38,18 +39,24 @@ void setup()
 void loop()
 
 {
-  for(pos = 0; pos<180; pos+=.5) {
-    myservo.write(pos);
+  for(tiltPos = 65; tiltPos<100; tiltPos += 2) {
+    tiltServo.write(tiltPos);
     delay(100);
-    val = takeData();
-    dist = getDist(val);
-    Serial.print(pos);             
-    Serial.print(",");
-    Serial.print(val);
-    Serial.print(",");
-    Serial.println(dist);
+    for(panPos = 0; panPos<180; panPos+=2) {
+      panServo.write(panPos);
+      delay(100);
+      val = takeData();
+      dist = getDist(val);
+      Serial.print(tiltPos);
+      Serial.print(",");
+      Serial.print(panPos);             
+      Serial.print(",");
+      Serial.print(val);
+      Serial.print(",");
+      Serial.println(dist);
+    }
+    delay(500);
   }
-  myservo.write(0);
   delay(10000);
 
 }
