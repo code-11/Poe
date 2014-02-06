@@ -8,14 +8,19 @@ int val = 0;           // variable to store the value read
 float dist = 0;        // variable to store the calculated distance
 float panPos = 0;           // variable to store the servo position
 float tiltPos = 0;
-int ahead = 70;
+int tiltOff = 70;
+int panOff = -2;
 
 float getDist(int IRval) {
   return 4590*(1.0)/((float) IRval);
 }
 
-int motorEncode(int deg){
-  return (-1*deg)+ahead;
+int tiltEncode(int deg){
+  return (-1*deg)+tiltOff;
+}
+
+int panEncode(int deg) {
+  return deg+panOff;
 }
 
 int takeData() {
@@ -44,11 +49,11 @@ void setup()
 void loop()
 
 {
-  for(tiltPos = motorEncode(25); tiltPos<motorEncode(-10); tiltPos += 2) {
-    tiltServo.write(tiltPos);
+  for(tiltPos = 25; tiltPos>-10; tiltPos -= 2) {
+    tiltServo.write(tiltEncode(tiltPos));
     delay(100);
     for(panPos = 0; panPos<180; panPos+=2) {
-      panServo.write(panPos);
+      panServo.write(panEncode(panPos));
       delay(100);
       val = takeData();
       dist = getDist(val);
