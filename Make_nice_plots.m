@@ -1,9 +1,10 @@
 cleanData = [(data(:,1:2)./180).*pi,data(:,4)];
+cleanData(:,2) = (cleanData(:,2)-(pi/2));
 r=data(:,4);
-h=r.*sin(cleanData(:,1));
-r_xy=r.*cos(cleanData(:,1));
-x = r_xy.*cos(cleanData(:,2));
-y = r_xy.*sin(cleanData(:,2));
+y=r.*sin(cleanData(:,2));
+r_xy=r.*cos(cleanData(:,2));
+x = r_xy.*cos(cleanData(:,1));
+h = r_xy.*sin(cleanData(:,1));
 % Pos = zeros(size(cleanData));
 % for i = 1:length(cleanData(:,1))
 %     phi = cleanData(i,1);
