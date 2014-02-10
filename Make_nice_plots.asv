@@ -10,9 +10,9 @@
 % Throw out bad data script 
 for i = 1:length(x)
 if ((x(i)<0) || x(i)>30)
-c(i)=0
+c(i)=0;
 else
-c(i)=x(i)
+c(i)=x(i);
 end
 end
 
