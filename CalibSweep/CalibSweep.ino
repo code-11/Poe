@@ -24,13 +24,13 @@ void loop()
   float stepSize = .5;
   for(tiltPos = 60; tiltPos<100; tiltPos += stepSize) {
     tiltServo.write(tiltPos);
-    delay(100);
+    delay(300);
     Serial.println(tiltPos);
   }
   Serial.println("pan");
   for(panPos = 70; panPos<100; panPos+=stepSize) {
     panServo.write(panPos);
-    delay(500);
+    delay(300);
     Serial.println(panPos);             
 
   }
